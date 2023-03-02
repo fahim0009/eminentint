@@ -169,6 +169,10 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::put('/job/{id}', [JobController::class, 'update']);
     Route::get('/job/{id}', [JobController::class, 'delete']);
 
+
+    
+    // agent request  
+    Route::get('/agent-request', [JobController::class, 'getAgentRequest'])->name('admin.agentrequest');
     
     Route::get('/show-images/{id}', [ImageController::class, 'showImage'])->name('showimg');
 

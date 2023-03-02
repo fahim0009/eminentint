@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use App\Models\JobCategory;
+use App\Models\AgentRequest;
 Use Image;
 use Illuminate\support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -249,5 +250,11 @@ class JobController extends Controller
         else{
             return response()->json(['success'=>false,'message'=>'Update Failed']);
         }
+    }
+
+    public function getAgentRequest()
+    {
+        $data = AgentRequest::orderby('id','DESC')->get();
+        return view('admin.job.agentrequest',compact('data'));
     }
 }

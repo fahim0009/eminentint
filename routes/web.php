@@ -44,6 +44,10 @@ Route::get('/blog', [FrontendController::class, 'blog'])->name('frontend.blog');
 Route::get('/blog/{id}', [FrontendController::class, 'blogDetails'])->name('blogdtl');
 
 
+Route::get('/become-an-agent', [FrontendController::class, 'becomeAnAgent'])->name('becomeanagent');
+Route::post('/become-an-agent', [FrontendController::class, 'becomeAnAgentStore'])->name('becomeagent.store');
+
+
 Route::get('/job-category', [FrontendController::class, 'jobCategory'])->name('frontend.jobcategory');
 /*------------------------------------------
 --------------------------------------------

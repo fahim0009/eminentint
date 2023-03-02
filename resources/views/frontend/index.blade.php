@@ -248,19 +248,21 @@
                         <div class="row">
 
                             @foreach (\App\Models\Work::orderby('id','DESC')->limit(4)->get() as $key => $work)
-                                <div class="col-xl-6 col-lg-6 col-md-6">
-                                    <div class="twm-w-process-steps-2">
-                                        <div class="twm-w-pro-top bg-clr-{{$work->bg_color}}-light bg-{{$work->bg_color}}-light-shadow">
-                                            <span class="twm-large-number text-clr-{{$work->bg_color}}">{{ $key + 1 }}</span>
-                                            <div class="twm-media">
-                                                <span><img src="{{ asset('images/'.$work->image)}}" alt="icon1"></span>
+                                
+                                    <div class="col-xl-6 col-lg-6 col-md-6">
+                                        <div class="twm-w-process-steps-2">
+                                            <div class="twm-w-pro-top bg-clr-{{$work->bg_color}}-light bg-{{$work->bg_color}}-light-shadow">
+                                                <span class="twm-large-number text-clr-{{$work->bg_color}}">{{ $key + 1 }}</span>
+                                                <div class="twm-media">
+                                                    <span><img src="{{ asset('images/'.$work->image)}}" alt="icon1"></span>
+                                                </div>
+                                                <a href="{{ route('becomeanagent')}}"><h4 class="twm-title">{{$work->title}}</h4></a>
+                                                {!! $work->description !!}
                                             </div>
-                                            <h4 class="twm-title">{{$work->title}}</h4>
-                                            {!! $work->description !!}
+                                            
                                         </div>
-                                        
                                     </div>
-                                </div>
+                                
                             @endforeach
                             
 

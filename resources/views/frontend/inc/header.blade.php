@@ -8,7 +8,7 @@
                 <div class="logo-header">
                     <div class="logo-header-inner logo-header-one">
                         <a href="{{ route('homepage')}}">
-                        <img src="{{ asset('assets/images/logo-dark.png')}}" alt="">
+                        <img src="{{ asset('assets/images/eminentlogo.png')}}" alt="">
                         </a>
                     </div>
                 </div>  
