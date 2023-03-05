@@ -6,21 +6,21 @@
 @section('content')
 <div class="page-content">
 
-    <div class="twm-home2-banner-section site-bg-gray bg-cover" style="background-image:url({{ asset('assets/images/main-slider/slider2/bg1.jpg')}})">
+    <div class="twm-home2-banner-section site-bg-gray bg-cover" style="background-image:url({{ asset('assets/images/main-slider/slider2/e10.jpg')}});height:930px">
         <div class="row">
             
             <!--Left Section-->
-            <div class="col-xl-6 col-lg-6 col-md-12">
+            {{-- <div class="col-xl-6 col-lg-6 col-md-12">
                 <div class="twm-bnr-left-section">
                     <div class="twm-bnr-title-small">We Have <span class="site-text-secondry">208,000+</span> Live Jobs</div>
                     <div class="twm-bnr-title-large">Your <span class="site-text-primary">Dream Job </span> in one place</div> 
                     <div class="twm-bnr-discription">Find jobs that match your interests with us. Jobzilla provides a place you to find your Job.</div>
                     <a href="job-list.html" class="site-button">Get Started</a>
                 </div>
-            </div>
+            </div> --}}
 
             <!--right Section-->
-            <div class="col-xl-6 col-lg-6 col-md-12 twm-bnr-right-section">
+            {{-- <div class="col-xl-6 col-lg-6 col-md-12 twm-bnr-right-section">
                 <div class="twm-bnr2-right-content">
 
                     <div class="twm-img-bg-circle-area2">
@@ -90,7 +90,7 @@
                     </div>
 
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         

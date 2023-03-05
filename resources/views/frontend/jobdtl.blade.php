@@ -5,17 +5,20 @@
 
 @section('content')
 
+@php
+    $jobcat = \App\Models\JobCategory::where('id', $data->category_id)->first();
+@endphp
 <!-- CONTENT START -->
 <div class="page-content">
 
     <!-- INNER PAGE BANNER -->
-    <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url({{ asset('assets/images/banner/1.jpg')}});">
+    <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url({{ asset('images/'.$jobcat->image)}});">
         <div class="overlay-main site-bg-white opacity-01"></div>
         <div class="container">
             <div class="wt-bnr-inr-entry">
                 <div class="banner-title-outer">
                     <div class="banner-title-name">
-                        <h2 class="wt-title">IT Department Manager</h2>
+                        <h2 class="wt-title">{{$jobcat->name}}</h2>
                     </div>
                 </div>
                 <!-- BREADCRUMB ROW -->                            
