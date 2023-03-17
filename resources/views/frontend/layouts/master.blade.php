@@ -37,6 +37,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/flaticon.css')}}"> <!-- Flaticon -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/swiper-bundle.min.css')}}"><!-- Swiper Slider -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}"><!-- MAIN STYLE SHEET -->  
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NQ6SMWBNNG">
+</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NQ6SMWBNNG');
+</script>
 
 </head>
 
