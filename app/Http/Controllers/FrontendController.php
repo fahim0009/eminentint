@@ -82,7 +82,7 @@ class FrontendController extends Controller
 
             $email_to = "fahim.amin71@gmail.com";
             Mail::send('email.becomeagent', compact('mail'), function($message)use($mail,$email_to) {
-                $message->from('fahim.amin71@gmail.com', 'Eminent International');
+                $message->from('info@eminentint.com', 'Eminent International');
                 $message->to($email_to)
                 ->subject($mail["subject"]);
                 });

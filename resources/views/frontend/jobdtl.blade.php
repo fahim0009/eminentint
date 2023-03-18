@@ -91,10 +91,6 @@
                             {!! $data->description !!}
 
                             
-                            
-                            
-
-                            
                           
                             <h4 class="twm-s-title">Share Profile</h4>
                             <div class="twm-social-tags">
