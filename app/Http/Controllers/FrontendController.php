@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\CompanyDetails;
 use App\Models\Contact;
+use App\Models\Slider;
 use Illuminate\Http\Request;
     use Illuminate\Support\Str;
 
@@ -12,28 +13,7 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('products')->where('status', 1)->get();
-        $company = CompanyDetails::select([
-            'company_name',
-            'fav_icon',
-            'google_site_verification',
-            'footer_content',
-            'facebook',
-            'twitter',
-            'linkedin',
-            'website',
-            'phone1',
-            'email1',
-            'address1',
-            'address2',
-            'company_logo',
-            'copyright',
-            'google_map',
-        ])->first();
-
-        $slider = \App\Models\Slider::where('status', 1)->get();
-
-        return view('auth.login', compact('categories','company', 'slider'));
+        return view('auth.login');
         // return view('frontend.index', compact('categories','company', 'slider'));
     }
 

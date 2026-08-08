@@ -6,12 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
+
+/**
+ * @method static \App\Models\CompanyDetails first()
+ * @method static \Illuminate\Database\Eloquent\Builder where(string $column, string $operator, mixed $value)
+ * @method static \Illuminate\Database\Eloquent\Collection get()
+ * @method static \App\Models\CompanyDetails find(int $id)
+ * @method static \App\Models\CompanyDetails create(array $attributes)
+ */
+
 class CompanyDetails extends Model implements TranslatableContract
 {
     use Translatable;
 
     protected $table = 'company_details';
     protected $guarded = [];
+
  
     public $translatedAttributes = [
         'company_name', 'business_name', 'address1', 'address2', 
