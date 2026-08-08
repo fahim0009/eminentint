@@ -132,6 +132,15 @@
                 </li>
 
                 
+                <li class="nav-item">
+                    <a href="{{ route('alljoblisting') }}" class="nav-link {{ Route::is('alljoblisting') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Job List</span>
+                    </a>
+                </li>
+
+
+                
                 
                 <li class="nav-item">
                     <a href="{{ route('admin.galleries') }}" class="nav-link {{ Route::is('admin.galleries') ? 'active' : '' }}">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SliderController;
@@ -158,6 +159,14 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/about-cert-status', [AboutController::class, 'toggleCertStatus'])->name('about.cert.toggleStatus');
     Route::get('/about-cert/{id}/edit', [AboutController::class, 'editCert'])->name('about.cert.edit');
     Route::delete('/about-cert/{id}', [AboutController::class, 'destroyCert'])->name('about.cert.delete');
+
+    // 9. joblisting
+    Route::get('/job-listing', [JobListingController::class, 'index'])->name('alljoblisting');
+    Route::post('/job-listing', [JobListingController::class, 'store'])->name('joblisting.store');
+    Route::get('/job-listing/{id}/edit', [JobListingController::class, 'edit']);
+    Route::post('/job-listing-update', [JobListingController::class, 'update']);
+    Route::delete('/job-listing/{id}', [JobListingController::class, 'delete'])->name('joblisting.delete');
+    Route::post('/job-listing-status', [JobListingController::class, 'toggleStatus']);
 
 
 
