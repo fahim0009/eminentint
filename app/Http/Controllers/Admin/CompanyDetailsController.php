@@ -7,15 +7,45 @@ use Illuminate\Http\Request;
 use App\Models\CompanyDetails;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Cache;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class CompanyDetailsController extends Controller
 {
-    public function index()
+    /**
+     * Helper function to translate English text to Arabic and Bengali.
+     */
+    private function translateAndSet($model, $field, $englishValue)
     {
-        $data = CompanyDetails::firstOrCreate();
-        return view('admin.company.index',compact('data'));
+        // Always save the English value
+        $model->setTranslation($field, 'en', $englishValue);
+        
+        if (!empty($englishValue)) {
+            try {
+                $trAr = new GoogleTranslate('ar');
+                $model->setTranslation($field, 'ar', $trAr->translate($englishValue));
+                
+                $trBn = new GoogleTranslate('bn');
+                $model->setTranslation($field, 'bn', $trBn->translate($englishValue));
+            } catch (\Exception $e) {
+                // If Google Translate fails, fallback to English text to prevent empty data
+                $model->setTranslation($field, 'ar', $englishValue);
+                $model->setTranslation($field, 'bn', $englishValue);
+            }
+        }
     }
 
+    /**
+     * Display the main company details form.
+     */
+    public function index()
+    {
+        $data = CompanyDetails::firstOrCreate(['id' => 1]);
+        return view('admin.company.index', compact('data'));
+    }
+
+    /**
+     * Update the main company details.
+     */
     public function update(Request $request)
     {
         $data = CompanyDetails::first();
@@ -52,6 +82,7 @@ class CompanyDetailsController extends Controller
             'footer_logo' => 'nullable|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
+        // --- Handle File Uploads ---
         if ($request->hasFile('fav_icon')) {
             if ($data->fav_icon && file_exists(public_path('uploads/company/' . $data->fav_icon))) {
                 unlink(public_path('uploads/company/' . $data->fav_icon));
@@ -79,8 +110,7 @@ class CompanyDetailsController extends Controller
             $data->footer_logo = $footerLogoName;
         }
 
-        $data->company_name = $request->company_name;
-        $data->business_name = $request->business_name;
+        // --- Save Non-Translatable Fields ---
         $data->email1 = $request->email1;
         $data->email2 = $request->email2;
         $data->phone1 = $request->phone1;
@@ -88,8 +118,6 @@ class CompanyDetailsController extends Controller
         $data->phone3 = $request->phone3;
         $data->phone4 = $request->phone4;
         $data->whatsapp = $request->whatsapp;
-        $data->address1 = $request->address1;
-        $data->address2 = $request->address2;
         $data->website = $request->website;
         $data->facebook = $request->facebook;
         $data->instagram = $request->instagram;
@@ -102,7 +130,6 @@ class CompanyDetailsController extends Controller
         $data->google_play_link = $request->google_play_link;
         $data->footer_link = $request->footer_link;
         $data->currency = $request->currency;
-        $data->footer_content = $request->footer_content;
         $data->google_map = $request->google_map;
         $data->company_reg_number = $request->company_reg_number;
         $data->vat_number = $request->vat_number;
@@ -111,17 +138,30 @@ class CompanyDetailsController extends Controller
         $data->sort_code = $request->sort_code;
         $data->bank = $request->bank;
 
+        // --- Save Translatable Fields (Auto-Translate) ---
+        $this->translateAndSet($data, 'company_name', $request->company_name);
+        $this->translateAndSet($data, 'business_name', $request->business_name);
+        $this->translateAndSet($data, 'address1', $request->address1);
+        $this->translateAndSet($data, 'address2', $request->address2);
+        $this->translateAndSet($data, 'footer_content', $request->footer_content);
+
         $data->save();
 
-        return redirect()->back()->with('success', 'Company details updated successfully.');
+        return redirect()->back()->with('success', 'Company details updated & auto-translated successfully.');
     }
 
+    /**
+     * Show About Us form.
+     */
     public function aboutUs()
     {       
-        $companyDetails = CompanyDetails::select('about_us')->first();
+        $companyDetails = CompanyDetails::first();
         return view('admin.company.about_us', compact('companyDetails'));
     }
 
+    /**
+     * Update About Us.
+     */
     public function aboutUsUpdate(Request $request)
     {
         $request->validate([
@@ -129,18 +169,24 @@ class CompanyDetailsController extends Controller
         ]);
 
         $companyDetails = CompanyDetails::first();
-        $companyDetails->about_us = $request->about_us;
+        $this->translateAndSet($companyDetails, 'about_us', $request->about_us);
         $companyDetails->save();
 
-        return redirect()->back()->with('success', 'About us updated successfully.');
+        return redirect()->back()->with('success', 'About us updated & translated successfully.');
     }
 
+    /**
+     * Show Privacy Policy form.
+     */
     public function privacyPolicy()
     {
-        $companyDetails = CompanyDetails::select('privacy_policy')->first();
+        $companyDetails = CompanyDetails::first();
         return view('admin.company.privacy', compact('companyDetails'));
     }
 
+    /**
+     * Update Privacy Policy.
+     */
     public function privacyPolicyUpdate(Request $request)
     {
         $request->validate([
@@ -148,20 +194,26 @@ class CompanyDetailsController extends Controller
         ]);
 
         $companyDetails = CompanyDetails::first();
-        $companyDetails->privacy_policy = $request->privacy_policy;
+        $this->translateAndSet($companyDetails, 'privacy_policy', $request->privacy_policy);
         $companyDetails->save();
 
         Cache::forget('company_privacy');
 
-        return redirect()->back()->with('success', 'Privacy policy updated successfully.');
+        return redirect()->back()->with('success', 'Privacy policy updated & translated successfully.');
     }
 
+    /**
+     * Show Terms and Conditions form.
+     */
     public function termsAndConditions()
     {
-        $companyDetails = CompanyDetails::select('terms_and_conditions')->first();
+        $companyDetails = CompanyDetails::first();
         return view('admin.company.terms', compact('companyDetails'));
     }
 
+    /**
+     * Update Terms and Conditions.
+     */
     public function termsAndConditionsUpdate(Request $request)
     {
         $request->validate([
@@ -169,20 +221,26 @@ class CompanyDetailsController extends Controller
         ]);
 
         $companyDetails = CompanyDetails::first();
-        $companyDetails->terms_and_conditions = $request->terms_and_conditions;
+        $this->translateAndSet($companyDetails, 'terms_and_conditions', $request->terms_and_conditions);
         $companyDetails->save();
 
         Cache::forget('company_terms');
 
-        return redirect()->back()->with('success', 'Terms and conditions updated successfully.');
+        return redirect()->back()->with('success', 'Terms and conditions updated & translated successfully.');
     }
 
+    /**
+     * Show Mail Body form.
+     */
     public function mailBody()
     {
-        $companyDetails = CompanyDetails::select('mail_body')->first();
+        $companyDetails = CompanyDetails::first();
         return view('admin.company.mail_body', compact('companyDetails'));
     }
 
+    /**
+     * Update Mail Body.
+     */
     public function mailBodyUpdate(Request $request)
     {
         $request->validate([
@@ -190,18 +248,24 @@ class CompanyDetailsController extends Controller
         ]);
 
         $companyDetails = CompanyDetails::first();
-        $companyDetails->mail_body = $request->mail_body;
+        $this->translateAndSet($companyDetails, 'mail_body', $request->mail_body);
         $companyDetails->save();
 
         return redirect()->back()->with('success', 'Updated successfully.');
     }
 
+    /**
+     * Show Home Footer form.
+     */
     public function homeFooter()
     {
-        $companyDetails = CompanyDetails::select('footer_content')->first();
+        $companyDetails = CompanyDetails::first();
         return view('admin.company.home_footer', compact('companyDetails'));
     }
 
+    /**
+     * Update Home Footer.
+     */
     public function homeFooterUpdate(Request $request)
     {
         $request->validate([
@@ -209,18 +273,24 @@ class CompanyDetailsController extends Controller
         ]);
 
         $companyDetails = CompanyDetails::first();
-        $companyDetails->footer_content = $request->footer_content;
+        $this->translateAndSet($companyDetails, 'footer_content', $request->footer_content);
         $companyDetails->save();
 
         return redirect()->back()->with('success', 'Updated successfully.');
     }
 
+    /**
+     * Show Copyright form.
+     */
     public function copyright()
     {
-        $companyDetails = CompanyDetails::select('copyright')->first();
+        $companyDetails = CompanyDetails::first();
         return view('admin.company.copyright', compact('companyDetails'));
     }
 
+    /**
+     * Update Copyright.
+     */
     public function copyrightUpdate(Request $request)
     {
         $request->validate([
@@ -228,18 +298,24 @@ class CompanyDetailsController extends Controller
         ]);
 
         $companyDetails = CompanyDetails::first();
-        $companyDetails->copyright = $request->copyright;
+        $this->translateAndSet($companyDetails, 'copyright', $request->copyright);
         $companyDetails->save();
 
         return redirect()->back()->with('success', 'Updated successfully.');
     }
 
+    /**
+     * Show SEO Meta form.
+     */
     public function seoMeta()
     {
         $companyDetails = CompanyDetails::first();
         return view('admin.company.seo-meta', compact('companyDetails'));
     }
 
+    /**
+     * Update SEO Meta.
+     */
     public function seoMetaUpdate(Request $request)
     {
         $request->validate([
@@ -255,10 +331,13 @@ class CompanyDetailsController extends Controller
             $companyDetails = new CompanyDetails();
         }
 
+        // Non-translatable
         $companyDetails->google_site_verification = $request->google_site_verification;
-        $companyDetails->meta_title = $request->meta_title;
-        $companyDetails->meta_description = $request->meta_description;
-        $companyDetails->meta_keywords = $request->meta_keywords;
+
+        // Translatable
+        $this->translateAndSet($companyDetails, 'meta_title', $request->meta_title);
+        $this->translateAndSet($companyDetails, 'meta_description', $request->meta_description);
+        $this->translateAndSet($companyDetails, 'meta_keywords', $request->meta_keywords);
 
         // Handle meta image upload
         if ($request->hasFile('meta_image')) {
@@ -292,5 +371,4 @@ class CompanyDetailsController extends Controller
 
         return redirect()->back()->with('success', 'SEO Meta fields updated successfully.');
     }
-
 }
