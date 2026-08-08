@@ -140,6 +140,14 @@
                 </li>
 
 
+                <li class="nav-item">
+                    <a href="{{ route('allcountry') }}" class="nav-link {{ Route::is('allcountry') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Country</span>
+                    </a>
+                </li>
+
+
                 
                 
                 <li class="nav-item">

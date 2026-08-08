@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\JobListingController;
@@ -168,6 +169,13 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::delete('/job-listing/{id}', [JobListingController::class, 'delete'])->name('joblisting.delete');
     Route::post('/job-listing-status', [JobListingController::class, 'toggleStatus']);
 
+
+    Route::get('/country', [CountryController::class, 'index'])->name('allcountry');
+    Route::post('/country', [CountryController::class, 'store'])->name('country.store');
+    Route::get('/country/{id}/edit', [CountryController::class, 'edit']);
+    Route::post('/country-update', [CountryController::class, 'update']);
+    Route::delete('/country/{id}', [CountryController::class, 'delete'])->name('country.delete');
+    Route::post('/country-status', [CountryController::class, 'toggleStatus']);
 
 
 });
