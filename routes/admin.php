@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
+use App\Http\Controllers\Admin\CompanyLicenseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\FAQController;
@@ -176,6 +177,13 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/country-update', [CountryController::class, 'update']);
     Route::delete('/country/{id}', [CountryController::class, 'delete'])->name('country.delete');
     Route::post('/country-status', [CountryController::class, 'toggleStatus']);
+
+    Route::get('/company-license', [CompanyLicenseController::class, 'index'])->name('alllicense');
+    Route::post('/company-license', [CompanyLicenseController::class, 'store'])->name('license.store');
+    Route::get('/company-license/{id}/edit', [CompanyLicenseController::class, 'edit']);
+    Route::post('/company-license-update', [CompanyLicenseController::class, 'update']);
+    Route::delete('/company-license/{id}', [CompanyLicenseController::class, 'delete'])->name('license.delete');
+    Route::post('/company-license-status', [CompanyLicenseController::class, 'toggleStatus']);
 
 
 });

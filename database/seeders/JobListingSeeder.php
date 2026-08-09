@@ -13,8 +13,8 @@ class JobListingSeeder extends Seeder
                 // Disable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         
-        DB::table('company_details_translations')->truncate();
-        DB::table('company_details')->truncate();
+        DB::table('job_listing_details_translations')->truncate();
+        DB::table('job_listings')->truncate();
         
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 

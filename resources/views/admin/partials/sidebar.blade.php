@@ -148,6 +148,13 @@
                 </li>
 
 
+                <li class="nav-item">
+                    <a href="{{ route('alllicense') }}" class="nav-link {{ Route::is('alllicense') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>License</span>
+                    </a>
+                </li>
+
                 
                 
                 <li class="nav-item">
