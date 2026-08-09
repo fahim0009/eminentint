@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 
-class Gallery extends Model implements TranslatableContract
+class GalleryCategory extends Model implements TranslatableContract
 {
     use Translatable;
     protected $guarded = [];
-    public $translatedAttributes = ['title', 'description'];
+    public $translatedAttributes = ['name'];
     
-    public function category() {
-        return $this->belongsTo(GalleryCategory::class, 'gallery_category_id');
+    public function galleries() {
+        return $this->hasMany(Gallery::class);
     }
 }

@@ -155,10 +155,17 @@
                     </a>
                 </li>
 
+
+                <li class="nav-item">
+                    <a href="{{ route('allgallerycat') }}" class="nav-link {{ Route::is('allgallerycat') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Gallery Category</span>
+                    </a>
+                </li>
                 
                 
                 <li class="nav-item">
-                    <a href="{{ route('admin.galleries') }}" class="nav-link {{ Route::is('admin.galleries') ? 'active' : '' }}">
+                    <a href="{{ route('allgallery') }}" class="nav-link {{ Route::is('allgallery') ? 'active' : '' }}">
                         <i class="ri-image-line"></i>
                         <span>Galleries</span>
                     </a>

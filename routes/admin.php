@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CompanyLicenseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\FAQController;
+use App\Http\Controllers\Admin\GalleryCategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
@@ -102,11 +103,6 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/category-status', [CategoryController::class, 'toggleStatus']);
 
     
-    Route::get('/galleries',           [GalleryController::class, 'index'])->name('admin.galleries');
-    Route::post('/galleries',          [GalleryController::class, 'store']);
-    Route::get('/galleries/{id}/edit', [GalleryController::class, 'edit']);
-    Route::post('/galleries-update',   [GalleryController::class, 'update']);
-    Route::delete('/galleries/{id}',   [GalleryController::class, 'destroy'])->name('galleries.destroy');
 
 
     // ============================================
@@ -184,6 +180,24 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/company-license-update', [CompanyLicenseController::class, 'update']);
     Route::delete('/company-license/{id}', [CompanyLicenseController::class, 'delete'])->name('license.delete');
     Route::post('/company-license-status', [CompanyLicenseController::class, 'toggleStatus']);
+
+
+    // Gallery Categories
+    Route::get('/gallery-category', [GalleryCategoryController::class, 'index'])->name('allgallerycat');
+    Route::post('/gallery-category', [GalleryCategoryController::class, 'store'])->name('gallerycat.store');
+    Route::get('/gallery-category/{id}/edit', [GalleryCategoryController::class, 'edit']);
+    Route::post('/gallery-category-update', [GalleryCategoryController::class, 'update']);
+    Route::delete('/gallery-category/{id}', [GalleryCategoryController::class, 'delete'])->name('gallerycat.delete');
+    Route::post('/gallery-category-status', [GalleryCategoryController::class, 'toggleStatus']);
+
+    // Gallery Items
+    Route::get('/gallery', [GalleryController::class, 'index'])->name('allgallery');
+    Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
+    Route::get('/gallery/{id}/edit', [GalleryController::class, 'edit']);
+    Route::post('/gallery-update', [GalleryController::class, 'update']);
+    Route::delete('/gallery/{id}', [GalleryController::class, 'delete'])->name('gallery.delete');
+    Route::post('/gallery-status', [GalleryController::class, 'toggleStatus']);
+
 
 
 });
