@@ -171,6 +171,13 @@
                     </a>
                 </li>
 
+                
+                <li class="nav-item">
+                    <a href="{{ route('allindustry') }}" class="nav-link {{ Route::is('allindustry') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Industry</span>
+                    </a>
+                </li>
 
 
                 @php

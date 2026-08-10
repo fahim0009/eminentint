@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\GalleryCategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\HeroStatController;
+use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MilestoneController;
@@ -177,6 +178,12 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::delete('/hero-stat/{id}', [HeroStatController::class, 'delete'])->name('herostat.delete');
     Route::post('/hero-stat-status', [HeroStatController::class, 'toggleStatus']);
 
+    Route::get('/industry', [IndustryController::class, 'index'])->name('allindustry');
+    Route::post('/industry', [IndustryController::class, 'store'])->name('industry.store');
+    Route::get('/industry/{id}/edit', [IndustryController::class, 'edit']);
+    Route::post('/industry-update', [IndustryController::class, 'update']);
+    Route::delete('/industry/{id}', [IndustryController::class, 'delete'])->name('industry.delete');
+    Route::post('/industry-status', [IndustryController::class, 'toggleStatus']);
 
 
 });
