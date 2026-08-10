@@ -245,8 +245,13 @@
                                   class="nav-link {{ Route::is('faq.index') ? 'active' : '' }}">FAQ</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('allslider') }}" 
-                                  class="nav-link {{ Route::is('allslider') ? 'active' : '' }}">Sliders
+                                <a href="{{ route('hero.index') }}" 
+                                  class="nav-link {{ Route::is('hero.index') ? 'active' : '' }}">Hero Section
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('allherostat') }}" 
+                                  class="nav-link {{ Route::is('allherostat') ? 'active' : '' }}">Hero State
                                 </a>
                             </li>
                         </ul>

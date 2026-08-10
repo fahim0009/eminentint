@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GalleryCategoryController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\HeroSectionController;
+use App\Http\Controllers\Admin\HeroStatController;
 use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MilestoneController;
@@ -161,6 +163,19 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/gallery-update', [GalleryController::class, 'update']);
     Route::delete('/gallery/{id}', [GalleryController::class, 'delete'])->name('gallery.delete');
     Route::post('/gallery-status', [GalleryController::class, 'toggleStatus']);
+
+
+    // Hero Section Content (Single Row)
+    Route::get('/hero-page', [HeroSectionController::class, 'index'])->name('hero.index');
+    Route::post('/hero-page', [HeroSectionController::class, 'update'])->name('hero.update');
+
+    // Hero Stats CRUD
+    Route::get('/hero-stat', [HeroStatController::class, 'index'])->name('allherostat');
+    Route::post('/hero-stat', [HeroStatController::class, 'store'])->name('herostat.store');
+    Route::get('/hero-stat/{id}/edit', [HeroStatController::class, 'edit']);
+    Route::post('/hero-stat-update', [HeroStatController::class, 'update']);
+    Route::delete('/hero-stat/{id}', [HeroStatController::class, 'delete'])->name('herostat.delete');
+    Route::post('/hero-stat-status', [HeroStatController::class, 'toggleStatus']);
 
 
 
