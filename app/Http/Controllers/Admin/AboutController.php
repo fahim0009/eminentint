@@ -26,7 +26,7 @@ class AboutController extends Controller
 
     public function index()
     {
-        $data = About::firstOrCreate(['id' => 1]);
+        $data = About::firstOrCreate(['id' => 3]);
         return view('admin.about.index', compact('data'));
     }
 

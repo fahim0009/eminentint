@@ -44,11 +44,11 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold">Company Content Paragraph 1</label>
-                                    <textarea class="form-control" name="company_content1" rows="3">{{ $data->company_content1 }}</textarea>
+                                    <textarea class="form-control summernote" name="company_content1" rows="3">{!! $data->company_content1 !!}</textarea>
                                 </div>
                                 <div class="col-md-12">
                                     <label class="form-label fw-bold">Company Content Paragraph 2</label>
-                                    <textarea class="form-control" name="company_content2" rows="3">{{ $data->company_content2 }}</textarea>
+                                    <textarea class="form-control summernote" name="company_content2" rows="3">{!! $data->company_content2 !!}</textarea>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label fw-bold">Stat 1 Number</label>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <label class="form-label fw-bold">Vision Content</label>
-                                    <textarea class="form-control" name="vision_content" rows="2">{{ $data->vision_content }}</textarea>
+                                    <textarea class="form-control summernote" name="vision_content" rows="2">{!! $data->vision_content !!}</textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label fw-bold">Mission Title</label>
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <label class="form-label fw-bold">Mission Content</label>
-                                    <textarea class="form-control" name="mission_content" rows="2">{{ $data->mission_content }}</textarea>
+                                    <textarea class="form-control summernote" name="mission_content" rows="2">{!! $data->mission_content !!}</textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label fw-bold">Why Us Title</label>
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <label class="form-label fw-bold">Why Us Content (List)</label>
-                                    <textarea class="form-control" name="why_content" rows="4">{{ $data->why_content }}</textarea>
+                                    <textarea class="form-control summernote" name="why_content" rows="4">{!! $data->why_content !!}</textarea>
                                 </div>
                             </div>
 
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label fw-bold">Chairman Quote</label>
-                                        <textarea class="form-control" name="chairman_quote" rows="3">{{ $data->chairman_quote }}</textarea>
+                                        <textarea class="form-control summernote" name="chairman_quote" rows="3">{!! $data->chairman_quote !!}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6 ps-4">
@@ -162,7 +162,7 @@
                                     </div>
                                     <div class="mb-2">
                                         <label class="form-label fw-bold">CEO Quote</label>
-                                        <textarea class="form-control" name="ceo_quote" rows="3">{{ $data->ceo_quote }}</textarea>
+                                        <textarea class="form-control summernote" name="ceo_quote" rows="3">{!! $data->ceo_quote !!}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -188,5 +188,9 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('script')
 
 @endsection
