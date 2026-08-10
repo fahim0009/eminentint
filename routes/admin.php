@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\GalleryCategoryController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
+use App\Http\Controllers\Admin\MilestoneController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
@@ -109,54 +110,17 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     // ABOUT US MANAGEMENT - ROUTE ORDER MATTERS!
     // ============================================
 
-    // 1. Main Index Page (NO parameters)
-    Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+    // About Page Content (Single Row)
+    Route::get('/about-page', [AboutController::class, 'index'])->name('about.index');
+    Route::post('/about-page', [AboutController::class, 'update'])->name('about.update');
 
-    // 2. DataTable AJAX Routes (MUST be before {id} routes)
-    Route::get('/about/stats-data', [AboutController::class, 'getStatsData'])->name('about.stats.data');
-    Route::get('/about/highlights-data', [AboutController::class, 'getHighlightsData'])->name('about.highlights.data');
-    Route::get('/about/milestones-data', [AboutController::class, 'getMilestonesData'])->name('about.milestones.data');
-    Route::get('/about/values-data', [AboutController::class, 'getValuesData'])->name('about.values.data');
-    Route::get('/about/certs-data', [AboutController::class, 'getCertsData'])->name('about.certs.data');
-
-    // 3. Content Update (Hero & Story - NO {id})
-    Route::post('/about-content-update', [AboutController::class, 'updateContent'])->name('about.content.update');
-    Route::post('/about-image-upload', [AboutController::class, 'uploadImage'])->name('about.image.upload');
-
-    // 4. Stats CRUD
-    Route::post('/about-stat', [AboutController::class, 'storeStat'])->name('about.stat.store');
-    Route::post('/about-stat-update', [AboutController::class, 'updateStat'])->name('about.stat.update');
-    Route::post('/about-stat-status', [AboutController::class, 'toggleStatStatus'])->name('about.stat.toggleStatus');
-    Route::get('/about-stat/{id}/edit', [AboutController::class, 'editStat'])->name('about.stat.edit');
-    Route::delete('/about-stat/{id}', [AboutController::class, 'destroyStat'])->name('about.stat.delete');
-
-    // 5. Highlights CRUD
-    Route::post('/about-highlight', [AboutController::class, 'storeHighlight'])->name('about.highlight.store');
-    Route::post('/about-highlight-update', [AboutController::class, 'updateHighlight'])->name('about.highlight.update');
-    Route::post('/about-highlight-status', [AboutController::class, 'toggleHighlightStatus'])->name('about.highlight.toggleStatus');
-    Route::get('/about-highlight/{id}/edit', [AboutController::class, 'editHighlight'])->name('about.highlight.edit');
-    Route::delete('/about-highlight/{id}', [AboutController::class, 'destroyHighlight'])->name('about.highlight.delete');
-
-    // 6. Milestones CRUD
-    Route::post('/about-milestone', [AboutController::class, 'storeMilestone'])->name('about.milestone.store');
-    Route::post('/about-milestone-update', [AboutController::class, 'updateMilestone'])->name('about.milestone.update');
-    Route::post('/about-milestone-status', [AboutController::class, 'toggleMilestoneStatus'])->name('about.milestone.toggleStatus');
-    Route::get('/about-milestone/{id}/edit', [AboutController::class, 'editMilestone'])->name('about.milestone.edit');
-    Route::delete('/about-milestone/{id}', [AboutController::class, 'destroyMilestone'])->name('about.milestone.delete');
-
-    // 7. Values CRUD
-    Route::post('/about-value', [AboutController::class, 'storeValue'])->name('about.value.store');
-    Route::post('/about-value-update', [AboutController::class, 'updateValue'])->name('about.value.update');
-    Route::post('/about-value-status', [AboutController::class, 'toggleValueStatus'])->name('about.value.toggleStatus');
-    Route::get('/about-value/{id}/edit', [AboutController::class, 'editValue'])->name('about.value.edit');
-    Route::delete('/about-value/{id}', [AboutController::class, 'destroyValue'])->name('about.value.delete');
-
-    // 8. Certs CRUD
-    Route::post('/about-cert', [AboutController::class, 'storeCert'])->name('about.cert.store');
-    Route::post('/about-cert-update', [AboutController::class, 'updateCert'])->name('about.cert.update');
-    Route::post('/about-cert-status', [AboutController::class, 'toggleCertStatus'])->name('about.cert.toggleStatus');
-    Route::get('/about-cert/{id}/edit', [AboutController::class, 'editCert'])->name('about.cert.edit');
-    Route::delete('/about-cert/{id}', [AboutController::class, 'destroyCert'])->name('about.cert.delete');
+    // Milestones CRUD
+    Route::get('/milestone', [MilestoneController::class, 'index'])->name('allmilestone');
+    Route::post('/milestone', [MilestoneController::class, 'store'])->name('milestone.store');
+    Route::get('/milestone/{id}/edit', [MilestoneController::class, 'edit']);
+    Route::post('/milestone-update', [MilestoneController::class, 'update']);
+    Route::delete('/milestone/{id}', [MilestoneController::class, 'delete'])->name('milestone.delete');
+    Route::post('/milestone-status', [MilestoneController::class, 'toggleStatus']);
 
     // 9. joblisting
     Route::get('/job-listing', [JobListingController::class, 'index'])->name('alljoblisting');

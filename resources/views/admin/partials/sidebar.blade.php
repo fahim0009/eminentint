@@ -171,11 +171,13 @@
                     </a>
                 </li>
 
+
+
                 @php
                     $settingsRoute = Route::is(
                         'admin.companyDetails',
                         'admin.company.seo-meta',
-                        'admin.aboutUs',
+                        'allmilestone',
                         'admin.privacy-policy',
                         'admin.terms-and-conditions',
                         'faq.index',
@@ -207,8 +209,8 @@
                                   class="nav-link {{ Route::is('admin.company.seo-meta') ? 'active' : '' }}">SEO</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.aboutUs') }}" 
-                                  class="nav-link {{ Route::is('admin.aboutUs') ? 'active' : '' }}">About Us</a>
+                                <a href="{{ route('allmilestone') }}" 
+                                  class="nav-link {{ Route::is('allmilestone') ? 'active' : '' }}">Milestone</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('about.index') }}" 
