@@ -52,10 +52,9 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/sliders/update-order', [SliderController::class, 'updateOrder'])->name('sliders.updateOrder');
 
     // Contact
-    Route::get('/contacts', [ContactController::class,'index'])->name('contacts.index');
-    Route::get('/contacts/{id}', [ContactController::class,'show'])->name('contacts.show');
-    Route::delete('/contacts/{id}/delete', [ContactController::class,'destroy'])->name('contacts.delete');
-    Route::post('/contacts/toggle-status', [ContactController::class,'toggleStatus'])->name('contacts.toggleStatus');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contacts.index');
+    Route::get('/contact/{id}', [ContactController::class, 'show'])->name('contact.show');
+    Route::delete('/contact/{id}', [ContactController::class, 'delete'])->name('contact.delete');
 
     // FAQ
     Route::get('/faq', [FAQController::class, 'index'])->name('faq.index');

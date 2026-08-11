@@ -6,70 +6,81 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use Yajra\DataTables\Facades\DataTables;
-use Carbon\Carbon;
 
 class ContactController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $contacts = Contact::select(['id','first_name','last_name','email','subject','message','status','created_at'])
-                ->orderBy('status','asc')->orderByDesc('id');
-
-            return DataTables::of($contacts)
+            $data = Contact::query()->orderBy('id', 'desc');
+            
+            return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('full_name', fn($row) => $row->first_name.' '.$row->last_name)
-                ->addColumn('date', fn($row) => Carbon::parse($row->created_at)->format('d-m-Y'))
-                ->addColumn('status', function($row){
-                    $checked = $row->status ? 'checked' : '';
-                    return '<div class="form-check form-switch">
-                                <input class="form-check-input toggle-status" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
-                            </div>';
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('d M, Y h:i A');
                 })
-                ->addColumn('action', function($row){
+                ->addColumn('name_phone', function ($row) {
+                    return '<strong>' . $row->name . '</strong><br><small class="text-muted">' . $row->phone . '</small>';
+                })
+                ->addColumn('message_details', function ($row) {
+                    $subject = $row->subject ? '<strong>Subject:</strong> ' . $row->subject . '<br>' : '';
+                    return $subject . '<span class="text-muted small">' . \Str::limit($row->message, 100) . '</span>';
+                })
+                ->addColumn('status', function ($row) {
+                    return $row->is_read 
+                        ? '<span class="badge bg-light text-dark">Read</span>' 
+                        : '<span class="badge bg-danger text-white">Unread</span>';
+                })
+                ->addColumn('action', function ($row) {
                     return '
                         <div class="dropdown">
-                          <button class="btn btn-soft-secondary btn-sm" data-bs-toggle="dropdown"><i class="ri-more-fill"></i></button>
-                          <ul class="dropdown-menu dropdown-menu-end">
-                            <li><button class="dropdown-item viewBtn" data-id="'.$row->id.'"><i class="ri-eye-fill me-2"></i>View</button></li>
-                            <li class="dropdown-divider"></li>
-                            <li><button class="dropdown-item deleteBtn" data-delete-url="'.route('contacts.delete',$row->id).'" data-method="DELETE" data-table="#contactTable"><i class="ri-delete-bin-fill me-2"></i>Delete</button></li>
-                          </ul>
-                        </div>';
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <button class="dropdown-item viewContactBtn" data-id="'.$row->id.'">
+                                        <i class="ri-eye-fill align-bottom me-2 text-muted"></i> View Details
+                                    </button>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <button class="dropdown-item deleteBtn" 
+                                            data-delete-url="' . route('contact.delete', $row->id) . '" 
+                                            data-method="DELETE" 
+                                            data-table="#contactTable">
+                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    ';
                 })
-                ->rawColumns(['status','action'])
+                ->rawColumns(['name_phone', 'message_details', 'status', 'action'])
                 ->make(true);
         }
 
-        return view('admin.contacts.index');
+        return view('admin.contact.index');
     }
 
     public function show($id)
     {
-        $contact = Contact::find($id);
-        if (!$contact) return response()->json(['message' => 'Not found'], 404);
+        $contact = Contact::findOrFail($id);
+        
+        // Mark as read when viewed by admin
+        if (!$contact->is_read) {
+            $contact->is_read = 1;
+            $contact->save();
+        }
 
-        $contact->formatted_date = $contact->created_at->format('d-m-Y | H:i:s');
         return response()->json($contact);
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        $contact = Contact::find($id);
-        if (!$contact) return response()->json(['message' => 'Not found'], 404);
+        $data = Contact::findOrFail($id);
+        $data->delete();
 
-        $contact->delete();
-        return response()->json(['message' => 'Deleted successfully.']);
-    }
-
-    public function toggleStatus(Request $request)
-    {
-        $contact = Contact::find($request->id);
-        if (!$contact) return response()->json(['message' => 'Not found'], 404);
-
-        $contact->status = $request->status;
-        $contact->save();
-
-        return response()->json(['message' => 'Status updated successfully.']);
+        return response()->json(['message' => 'Message deleted successfully.'], 200);
     }
 }

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\AboutApiController;
 use App\Http\Controllers\Api\HeroApiController;
 use App\Http\Controllers\Api\IndustryApiController;
 use App\Http\Controllers\Api\ServiceApiController; // Add this
+use App\Http\Controllers\Api\ContactApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthContoller::class, 'login']);
@@ -28,6 +29,7 @@ Route::get('hero-section', [HeroApiController::class, 'getHeroSection']);
 Route::get('hero-stats', [HeroApiController::class, 'getHeroStats']);
 Route::get('industries', [IndustryApiController::class, 'getIndustries']);
 Route::get('services', [ServiceApiController::class, 'getServices']); // Add this
+Route::post('contact-submit', [ContactApiController::class, 'submitContactForm']);
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('user', [AuthContoller::class, 'user']);
