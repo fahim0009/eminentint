@@ -193,4 +193,29 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/service-status', [ServiceController::class, 'toggleStatus']);
 
 
+    // Employer Advantages (Why Choose Us)
+    Route::get('/employer-advantage', [EmployerAdvantageController::class, 'index'])->name('allempladv');
+    Route::post('/employer-advantage', [EmployerAdvantageController::class, 'store'])->name('empladv.store');
+    Route::get('/employer-advantage/{id}/edit', [EmployerAdvantageController::class, 'edit']);
+    Route::post('/employer-advantage-update', [EmployerAdvantageController::class, 'update']);
+    Route::delete('/employer-advantage/{id}', [EmployerAdvantageController::class, 'delete'])->name('empladv.delete');
+    Route::post('/employer-advantage-status', [EmployerAdvantageController::class, 'toggleStatus']);
+
+    // Recruitment Steps (Process Timeline)
+    Route::get('/recruitment-step', [RecruitmentStepController::class, 'index'])->name('allrecstep');
+    Route::post('/recruitment-step', [RecruitmentStepController::class, 'store'])->name('recstep.store');
+    Route::get('/recruitment-step/{id}/edit', [RecruitmentStepController::class, 'edit']);
+    Route::post('/recruitment-step-update', [RecruitmentStepController::class, 'update']);
+    Route::delete('/recruitment-step/{id}', [RecruitmentStepController::class, 'delete'])->name('recstep.delete');
+    Route::post('/recruitment-step-status', [RecruitmentStepController::class, 'toggleStatus']);
+
+    // Track Records (Partners)
+    Route::get('/track-record', [TrackRecordController::class, 'index'])->name('alltrackrec');
+    Route::post('/track-record', [TrackRecordController::class, 'store'])->name('trackrec.store');
+    Route::get('/track-record/{id}/edit', [TrackRecordController::class, 'edit']);
+    Route::post('/track-record-update', [TrackRecordController::class, 'update']);
+    Route::delete('/track-record/{id}', [TrackRecordController::class, 'delete'])->name('trackrec.delete');
+    Route::post('/track-record-status', [TrackRecordController::class, 'toggleStatus']);
+
+
 });
