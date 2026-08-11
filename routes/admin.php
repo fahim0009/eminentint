@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MilestoneController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
@@ -184,6 +185,13 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/industry-update', [IndustryController::class, 'update']);
     Route::delete('/industry/{id}', [IndustryController::class, 'delete'])->name('industry.delete');
     Route::post('/industry-status', [IndustryController::class, 'toggleStatus']);
+
+    Route::get('/service', [ServiceController::class, 'index'])->name('allservice');
+    Route::post('/service', [ServiceController::class, 'store'])->name('service.store');
+    Route::get('/service/{id}/edit', [ServiceController::class, 'edit']);
+    Route::post('/service-update', [ServiceController::class, 'update']);
+    Route::delete('/service/{id}', [ServiceController::class, 'delete'])->name('service.delete');
+    Route::post('/service-status', [ServiceController::class, 'toggleStatus']);
 
 
 });
