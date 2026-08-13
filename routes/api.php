@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\AboutApiController;
 use App\Http\Controllers\Api\HeroApiController;
 use App\Http\Controllers\Api\IndustryApiController;
 use App\Http\Controllers\Api\ServiceApiController;
+use App\Http\Controllers\Api\ContactApiController;
 use App\Http\Controllers\Api\EmployerZoneApiController; // Add this
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::get('hero-section', [HeroApiController::class, 'getHeroSection']);
 Route::get('hero-stats', [HeroApiController::class, 'getHeroStats']);
 Route::get('industries', [IndustryApiController::class, 'getIndustries']);
 Route::get('services', [ServiceApiController::class, 'getServices']);
+Route::post('contact-store', [ContactApiController::class, 'submitContactForm']);
 
 // Employer Zone APIs
 Route::get('employer-advantages', [EmployerZoneApiController::class, 'getAdvantages']);
