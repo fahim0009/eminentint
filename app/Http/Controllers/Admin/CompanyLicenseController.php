@@ -12,19 +12,24 @@ class CompanyLicenseController extends Controller
 {
     private function translateAndSet($model, $field, $englishValue)
     {
-        $model->setTranslation($field, 'en', $englishValue);
-        
-        if (!empty($englishValue)) {
-            try {
-                $trAr = new GoogleTranslate('ar');
-                $model->setTranslation($field, 'ar', $trAr->translate($englishValue));
-                
-                $trBn = new GoogleTranslate('bn');
-                $model->setTranslation($field, 'bn', $trBn->translate($englishValue));
-            } catch (\Exception $e) {
-                $model->setTranslation($field, 'ar', $englishValue);
-                $model->setTranslation($field, 'bn', $englishValue);
-            }
+        $englishValue = trim((string)$englishValue);
+
+        // Astrotomic uses translateOrNew() instead of setTranslation()
+        $model->translateOrNew('en')->{$field} = $englishValue;
+
+        if ($englishValue === '') {
+            $model->translateOrNew('ar')->{$field} = '';
+            $model->translateOrNew('bn')->{$field} = '';
+            return;
+        }
+
+        try {
+            $model->translateOrNew('ar')->{$field} = (new GoogleTranslate('ar'))->translate($englishValue);
+            $model->translateOrNew('bn')->{$field} = (new GoogleTranslate('bn'))->translate($englishValue);
+        } catch (\Exception $e) {
+            // Fallback to English if Google Translate fails
+            $model->translateOrNew('ar')->{$field} = $englishValue;
+            $model->translateOrNew('bn')->{$field} = $englishValue;
         }
     }
 

@@ -2,6 +2,13 @@
 @section('title', 'Government Licenses')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3">
             <div class="col-auto">
@@ -57,27 +64,75 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">Status Badge Color</label>
-                                    <input type="text" class="form-control" id="badge_color" name="badge_color" placeholder="bg-success">
+                                    <select class="form-select" id="badge_color" name="badge_color">
+                                        <option value="bg-success">Green (Success)</option>
+                                        <option value="bg-primary">Blue (Primary)</option>
+                                        <option value="bg-danger">Red (Danger)</option>
+                                        <option value="bg-warning text-dark">Yellow (Warning)</option>
+                                        <option value="bg-info text-dark">Cyan (Info)</option>
+                                        <option value="bg-secondary">Gray (Secondary)</option>
+                                        <option value="bg-dark">Dark (Black)</option>
+                                        <option value="bg-navy">Navy</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Prefix Badge Color</label>
-                                    <input type="text" class="form-control" id="prefix_badge_color" name="prefix_badge_color" placeholder="bg-navy">
+                                    <select class="form-select" id="prefix_badge_color" name="prefix_badge_color">
+                                        <option value="bg-navy">Navy</option>
+                                        <option value="bg-primary">Blue (Primary)</option>
+                                        <option value="bg-success">Green (Success)</option>
+                                        <option value="bg-danger">Red (Danger)</option>
+                                        <option value="bg-warning text-dark">Yellow (Warning)</option>
+                                        <option value="bg-info text-dark">Cyan (Info)</option>
+                                        <option value="bg-secondary">Gray (Secondary)</option>
+                                        <option value="bg-dark">Dark (Black)</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Border Class (Optional)</label>
-                                    <input type="text" class="form-control" id="border_class" name="border_class" placeholder="border-start border-4 border-success">
+                                    <select class="form-select" id="border_class" name="border_class">
+                                        <option value="">None</option>
+                                        <option value="border-start border-4 border-success">Left Green (Success)</option>
+                                        <option value="border-start border-4 border-primary">Left Blue (Primary)</option>
+                                        <option value="border-start border-4 border-danger">Left Red (Danger)</option>
+                                        <option value="border-start border-4 border-warning">Left Yellow (Warning)</option>
+                                        <option value="border-start border-4 border-info">Left Cyan (Info)</option>
+                                        <option value="border-start border-4 border-dark">Left Dark</option>
+                                        <option value="border-top border-4 border-primary">Top Blue (Primary)</option>
+                                        <option value="border-bottom border-4 border-success">Bottom Green (Success)</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Icon Class</label>
-                                    <input type="text" class="form-control" id="icon_class" name="icon_class" placeholder="bi-file-earmark-pdf-fill">
+                                    <select class="form-select" id="icon_class" name="icon_class">
+                                        <option value="bi-file-earmark-pdf-fill">PDF File Icon</option>
+                                        <option value="bi-patch-check-fill">Patch Check Icon</option>
+                                        <option value="bi-shield-check">Shield Check Icon</option>
+                                        <option value="bi-award-fill">Award Icon</option>
+                                        <option value="bi-file-earmark-text">Text File Icon</option>
+                                        <option value="bi-file-earmark-medical">Medical File Icon</option>
+                                        <option value="bi-mortarboard-fill">Mortarboard Icon</option>
+                                        <option value="bi-building-check">Building Check Icon</option>
+                                        <option value="bi-check-circle-fill">Check Circle Icon</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Icon Color</label>
-                                    <input type="text" class="form-control" id="icon_color" name="icon_color" placeholder="text-maroon">
+                                    <select class="form-select" id="icon_color" name="icon_color">
+                                        <option value="text-maroon">Maroon</option>
+                                        <option value="text-success">Green (Success)</option>
+                                        <option value="text-primary">Blue (Primary)</option>
+                                        <option value="text-danger">Red (Danger)</option>
+                                        <option value="text-warning">Yellow (Warning)</option>
+                                        <option value="text-info">Cyan (Info)</option>
+                                        <option value="text-secondary">Gray (Secondary)</option>
+                                        <option value="text-dark">Dark (Black)</option>
+                                        <option value="text-muted">Muted (Light Gray)</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4">
@@ -192,6 +247,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -206,6 +264,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -218,6 +279,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -232,6 +296,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -277,11 +344,14 @@
                 $("#prefix_badge").val(data.prefix_badge);
                 $("#description").val(data.description);
                 $("#reg_detail").val(data.reg_detail);
+                
+                // Set dropdown values
                 $("#badge_color").val(data.badge_color);
                 $("#prefix_badge_color").val(data.prefix_badge_color);
                 $("#border_class").val(data.border_class);
                 $("#icon_class").val(data.icon_class);
                 $("#icon_color").val(data.icon_color);
+                
                 $("#order").val(data.order);
                 
                 $("#codeid").val(data.id);
