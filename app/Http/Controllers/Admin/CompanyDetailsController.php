@@ -11,26 +11,27 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class CompanyDetailsController extends Controller
 {
-    /**
-     * Helper function to translate English text to Arabic and Bengali.
-     */
+    
     private function translateAndSet($model, $field, $englishValue)
     {
-        // Always save the English value
-        $model->setTranslation($field, 'en', $englishValue);
-        
-        if (!empty($englishValue)) {
-            try {
-                $trAr = new GoogleTranslate('ar');
-                $model->setTranslation($field, 'ar', $trAr->translate($englishValue));
-                
-                $trBn = new GoogleTranslate('bn');
-                $model->setTranslation($field, 'bn', $trBn->translate($englishValue));
-            } catch (\Exception $e) {
-                // If Google Translate fails, fallback to English text to prevent empty data
-                $model->setTranslation($field, 'ar', $englishValue);
-                $model->setTranslation($field, 'bn', $englishValue);
-            }
+        $englishValue = trim((string)$englishValue);
+
+        // Astrotomic uses translateOrNew() instead of setTranslation()
+        $model->translateOrNew('en')->{$field} = $englishValue;
+
+        if ($englishValue === '') {
+            $model->translateOrNew('ar')->{$field} = '';
+            $model->translateOrNew('bn')->{$field} = '';
+            return;
+        }
+
+        try {
+            $model->translateOrNew('ar')->{$field} = (new GoogleTranslate('ar'))->translate($englishValue);
+            $model->translateOrNew('bn')->{$field} = (new GoogleTranslate('bn'))->translate($englishValue);
+        } catch (\Exception $e) {
+            // Fallback to English if Google Translate fails
+            $model->translateOrNew('ar')->{$field} = $englishValue;
+            $model->translateOrNew('bn')->{$field} = $englishValue;
         }
     }
 
@@ -48,7 +49,8 @@ class CompanyDetailsController extends Controller
      */
     public function update(Request $request)
     {
-        $data = CompanyDetails::first();
+        // Use firstOrCreate instead of first() to prevent errors if table is empty
+        $data = CompanyDetails::firstOrCreate(['id' => 1]);
 
         $request->validate([
             'company_name' => 'required|string|max:255',
@@ -149,7 +151,6 @@ class CompanyDetailsController extends Controller
 
         return redirect()->back()->with('success', 'Company details updated & auto-translated successfully.');
     }
-
     /**
      * Show About Us form.
      */
