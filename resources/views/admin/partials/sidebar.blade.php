@@ -88,7 +88,9 @@
 
                 @php
                     $productActive = Route::is(
-                        'allcategory',
+                        'allempladv',
+                        'allrecstep',
+                        'alltrackrec',
                     );
                 @endphp
 
@@ -97,14 +99,22 @@
                       href="#sidebarAllProducts" data-bs-toggle="collapse" role="button"
                       aria-expanded="{{ $productActive ? 'true' : 'false' }}" 
                       aria-controls="sidebarAllProducts">
-                        <i class="ri-shopping-bag-3-line"></i> <span>Product Management</span>
+                        <i class="ri-shopping-bag-3-line"></i> <span>Employers Zone</span>
                     </a>
 
                     <div class="collapse menu-dropdown {{ $productActive ? 'show' : '' }}" id="sidebarAllProducts">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="{{ route('allcategory') }}" 
-                                  class="nav-link {{ Route::is('allcategory') ? 'active' : '' }}">Category</a>
+                                <a href="{{ route('allempladv') }}" 
+                                  class="nav-link {{ Route::is('allempladv') ? 'active' : '' }}">Employer Adv</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('allrecstep') }}" 
+                                  class="nav-link {{ Route::is('allrecstep') ? 'active' : '' }}">Recruitment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('alltrackrec') }}" 
+                                  class="nav-link {{ Route::is('alltrackrec') ? 'active' : '' }}">Track Record</a>
                             </li>
                         </ul>
                     </div>
