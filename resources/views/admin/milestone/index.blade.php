@@ -2,6 +2,13 @@
 @section('title', 'Company Timeline / Milestones')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3">
             <div class="col-auto">
@@ -37,8 +44,16 @@
 
                                 <div class="col-md-4">
                                     <label class="form-label">Badge Color</label>
-                                    <input type="text" class="form-control" id="badge_color" name="badge_color" placeholder="e.g. bg-success">
-                                    <small class="text-muted">Bootstrap classes (bg-navy, bg-maroon, bg-gold, bg-success)</small>
+                                    <select class="form-select" id="badge_color" name="badge_color">
+                                        <option value="bg-navy">Navy</option>
+                                        <option value="bg-primary">Blue (Primary)</option>
+                                        <option value="bg-success">Green (Success)</option>
+                                        <option value="bg-danger">Red (Danger)</option>
+                                        <option value="bg-warning text-dark">Yellow (Warning)</option>
+                                        <option value="bg-info text-dark">Cyan (Info)</option>
+                                        <option value="bg-secondary">Gray (Secondary)</option>
+                                        <option value="bg-dark">Dark (Black)</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-12">
@@ -142,6 +157,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -156,6 +174,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -168,6 +189,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -182,6 +206,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }

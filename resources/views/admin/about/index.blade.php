@@ -2,6 +2,13 @@
 @section('title', 'About Page Management')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-xl-12">
@@ -17,7 +24,7 @@
 
                 <div class="card">
                     <div class="card-header"><h3 class="card-title mb-0">About Page Content</h3></div>
-                    <form action="{{ route('about.update') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('about.update') }}" method="POST" enctype="multipart/form-data" id="aboutForm">
                         @csrf
                         <div class="card-body">
                             <h5 class="text-navy mb-3 border-bottom pb-2">Hero Section</h5>
@@ -181,7 +188,10 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Update About Page</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span class="spinner-border spinner-border-sm d-none" id="btnSpinner" role="status" aria-hidden="true"></span>
+                                <span id="btnText">Update About Page</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -192,5 +202,28 @@
 @endsection
 
 @section('script')
+    <script>
+        $(document).ready(function() {
+            // Initialize Summernote
+            $('.summernote').summernote({
+                height: 150,
+                tabsize: 2,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
 
+            // Form Submit Loader
+            $('#aboutForm').on('submit', function() {
+                $("#fullPageLoader").css("display", "flex");
+                $("#submitBtn").prop("disabled", true);
+                $("#btnSpinner").removeClass("d-none");
+                $("#btnText").text(' Updating...');
+            });
+        });
+    </script>
 @endsection
