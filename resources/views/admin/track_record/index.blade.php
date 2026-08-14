@@ -2,6 +2,13 @@
 @section('title', 'Corporate Track Records')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3"><div class="col-auto"><button type="button" class="btn btn-primary" id="newBtn">Add New Record</button></div></div>
     </div>
@@ -91,15 +98,27 @@
 
                 if ($(this).html() == 'Create') {
                     $.ajax({ url: url, method: "POST", contentType: false, processData: false, data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) { showSuccess(d.message); $("#addThisFormContainer").slideUp(300); setTimeout(() => { $("#newBtn").show(200); }, 300); reloadTable('#trackRecordTable'); clearform(); },
-                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } }
+                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
+                        }
                     });
                 }
                 if ($(this).html() == 'Update') {
                     form_data.append("codeid", $("#codeid").val());
                     $.ajax({ url: upurl, method: "POST", contentType: false, processData: false, data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) { showSuccess(d.message); $("#addThisFormContainer").slideUp(300); setTimeout(() => { $("#newBtn").show(200); }, 300); reloadTable('#trackRecordTable'); clearform(); },
-                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } }
+                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
+                        }
                     });
                 }
             });
