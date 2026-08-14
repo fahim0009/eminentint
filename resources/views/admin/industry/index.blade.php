@@ -2,6 +2,13 @@
 @section('title', 'Industries We Supply')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3">
             <div class="col-auto">
@@ -36,13 +43,36 @@
                                 
                                 <div class="col-md-6">
                                     <label class="form-label">Bootstrap Icon Class <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="icon" name="icon" placeholder="e.g. bi-building">
-                                    <small class="text-muted">Find icons at bootstrap icons (e.g. bi-cup-hot, bi-truck)</small>
+                                    <select class="form-select" id="icon" name="icon">
+                                        <option value="bi-building">Building</option>
+                                        <option value="bi-bricks">Bricks (Construction)</option>
+                                        <option value="bi-hammer">Hammer</option>
+                                        <option value="bi-tools">Tools</option>
+                                        <option value="bi-cup-hot">Cup Hot (Hospitality)</option>
+                                        <option value="bi-truck">Truck (Logistics)</option>
+                                        <option value="bi-heart-pulse">Heart Pulse (Medical)</option>
+                                        <option value="bi-clipboard-heart">Clipboard (Caregiver)</option>
+                                        <option value="bi-shop">Shop (Retail)</option>
+                                        <option value="bi-controller">Controller (Entertainment)</option>
+                                        <option value="bi-laptop">Laptop (IT)</option>
+                                        <option value="bi-gear-fill">Gear (Engineering)</option>
+                                        <option value="bi-person-gear">Person Gear (Skilled Labor)</option>
+                                        <option value="bi-egg-fried">Egg Fried (Food Service)</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Icon Color</label>
-                                    <input type="text" class="form-control" id="icon_color" name="icon_color" placeholder="e.g. text-navy" value="text-navy">
-                                    <small class="text-muted">e.g. text-navy, text-gold, text-maroon, text-success</small>
+                                    <select class="form-select" id="icon_color" name="icon_color">
+                                        <option value="text-navy">Navy</option>
+                                        <option value="text-primary">Blue (Primary)</option>
+                                        <option value="text-success">Green (Success)</option>
+                                        <option value="text-danger">Red (Danger)</option>
+                                        <option value="text-warning">Yellow (Warning)</option>
+                                        <option value="text-info">Cyan (Info)</option>
+                                        <option value="text-secondary">Gray (Secondary)</option>
+                                        <option value="text-dark">Dark (Black)</option>
+                                        <option value="text-muted">Muted (Light Gray)</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-12">
@@ -145,6 +175,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -159,6 +192,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -171,6 +207,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -185,6 +224,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
