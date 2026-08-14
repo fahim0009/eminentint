@@ -2,6 +2,13 @@
 @section('title', 'Hero Section Management')
 @section('content')
 
+    <!-- Loader Overlay -->
+    <div id="pageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-xl-12">
@@ -12,7 +19,8 @@
 
                 <div class="card">
                     <div class="card-header"><h3 class="card-title mb-0">Homepage Hero Section</h3></div>
-                    <form action="{{ route('hero.update') }}" method="POST" enctype="multipart/form-data">
+                    
+                    <form action="{{ route('hero.update') }}" method="POST" enctype="multipart/form-data" id="heroForm">
                         @csrf
                         <div class="card-body">
                             <h5 class="text-navy mb-3 border-bottom pb-2">Text & Buttons</h5>
@@ -70,12 +78,37 @@
 
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Update Hero Section</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span class="spinner-border spinner-border-sm d-none" id="btnSpinner" role="status" aria-hidden="true"></span>
+                                <span id="btnText">Update Hero Section</span>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('heroForm');
+            const loader = document.getElementById('pageLoader');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const btnText = document.getElementById('btnText');
+
+            if (form) {
+                form.addEventListener('submit', function () {
+                    // Show full page loader
+                    loader.style.display = 'flex';
+                    
+                    // Disable button and show button spinner
+                    submitBtn.disabled = true;
+                    btnSpinner.classList.remove('d-none');
+                    btnText.textContent = ' Updating...';
+                });
+            }
+        });
+    </script>
 
 @endsection
