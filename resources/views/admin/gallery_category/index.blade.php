@@ -2,6 +2,13 @@
 @section('title', 'Gallery Categories')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3">
             <div class="col-auto">
@@ -32,8 +39,21 @@
 
                                 <div class="col-md-8">
                                     <label class="form-label">Bootstrap Icon Class</label>
-                                    <input type="text" class="form-control" id="icon_class" name="icon_class" placeholder="e.g. bi-tools">
-                                    <small class="text-muted">Find icons at bootstrap icons (e.g. bi-airplane-engines-fill)</small>
+                                    <select class="form-select" id="icon_class" name="icon_class">
+                                        <option value="bi bi-folder">Folder</option>
+                                        <option value="bi bi-images">Images</option>
+                                        <option value="bi bi-camera">Camera</option>
+                                        <option value="bi bi-camera-reels">Video Reel</option>
+                                        <option value="bi bi-airplane-engines-fill">Airplane</option>
+                                        <option value="bi bi-tools">Tools</option>
+                                        <option value="bi bi-hard-hat">Hard Hat</option>
+                                        <option value="bi bi-building">Building</option>
+                                        <option value="bi bi-people-fill">People</option>
+                                        <option value="bi bi-briefcase-fill">Briefcase</option>
+                                        <option value="bi bi-award-fill">Award</option>
+                                        <option value="bi bi-mortarboard-fill">Education</option>
+                                        <option value="bi bi-shield-check">Shield Check</option>
+                                    </select>
                                 </div>
 
                                 <div class="col-md-4">
@@ -128,6 +148,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -142,6 +165,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -154,6 +180,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -168,6 +197,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
