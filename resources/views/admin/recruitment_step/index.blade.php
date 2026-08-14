@@ -2,6 +2,13 @@
 @section('title', 'Recruitment Process Steps')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3"><div class="col-auto"><button type="button" class="btn btn-primary" id="newBtn">Add New Step</button></div></div>
     </div>
@@ -24,11 +31,29 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Badge Color</label>
-                                    <input type="text" class="form-control" id="badge_color" name="badge_color" placeholder="bg-navy" value="bg-navy">
+                                    <select class="form-select" id="badge_color" name="badge_color">
+                                        <option value="bg-navy">Navy</option>
+                                        <option value="bg-primary">Blue (Primary)</option>
+                                        <option value="bg-success">Green (Success)</option>
+                                        <option value="bg-danger">Red (Danger)</option>
+                                        <option value="bg-warning text-dark">Yellow (Warning)</option>
+                                        <option value="bg-info text-dark">Cyan (Info)</option>
+                                        <option value="bg-secondary">Gray (Secondary)</option>
+                                        <option value="bg-dark">Dark (Black)</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Border Color</label>
-                                    <input type="text" class="form-control" id="border_color" name="border_color" placeholder="border-navy" value="border-navy">
+                                    <select class="form-select" id="border_color" name="border_color">
+                                        <option value="border-navy">Navy</option>
+                                        <option value="border-primary">Blue (Primary)</option>
+                                        <option value="border-success">Green (Success)</option>
+                                        <option value="border-danger">Red (Danger)</option>
+                                        <option value="border-warning">Yellow (Warning)</option>
+                                        <option value="border-info">Cyan (Info)</option>
+                                        <option value="border-secondary">Gray (Secondary)</option>
+                                        <option value="border-dark">Dark (Black)</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Order</label>
@@ -95,15 +120,27 @@
 
                 if ($(this).html() == 'Create') {
                     $.ajax({ url: url, method: "POST", contentType: false, processData: false, data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) { showSuccess(d.message); $("#addThisFormContainer").slideUp(300); setTimeout(() => { $("#newBtn").show(200); }, 300); reloadTable('#recruitmentStepTable'); clearform(); },
-                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } }
+                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
+                        }
                     });
                 }
                 if ($(this).html() == 'Update') {
                     form_data.append("codeid", $("#codeid").val());
                     $.ajax({ url: upurl, method: "POST", contentType: false, processData: false, data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) { showSuccess(d.message); $("#addThisFormContainer").slideUp(300); setTimeout(() => { $("#newBtn").show(200); }, 300); reloadTable('#recruitmentStepTable'); clearform(); },
-                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } }
+                        error: function(xhr) { if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } else { showError("Something went wrong!"); } },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
+                        }
                     });
                 }
             });
