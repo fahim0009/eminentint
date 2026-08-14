@@ -2,6 +2,13 @@
 @section('title', 'Countries We Serve')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3">
             <div class="col-auto">
@@ -191,6 +198,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -205,6 +215,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -217,6 +230,9 @@
                         contentType: false,
                         processData: false,
                         data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -231,6 +247,9 @@
                             } else {
                                 showError(xhr.responseJSON?.message ?? "Something went wrong!");
                             }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
