@@ -2,6 +2,13 @@
 @section('title', 'Hero Floating Stats')
 @section('content')
 
+    <!-- Full Page Loader Overlay -->
+    <div id="fullPageLoader" style="display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
     <div class="container-fluid" id="newBtnSection">
         <div class="row mb-3">
             <div class="col-auto">
@@ -24,11 +31,31 @@
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label class="form-label">Icon Class <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="icon" name="icon" placeholder="bi-people-fill">
+                                    <select class="form-select" id="icon" name="icon">
+                                        <option value="bi-people-fill">People</option>
+                                        <option value="bi-globe2">Globe</option>
+                                        <option value="bi-building-fill">Building</option>
+                                        <option value="bi-award-fill">Award</option>
+                                        <option value="bi-briefcase-fill">Briefcase</option>
+                                        <option value="bi-shield-check">Shield Check</option>
+                                        <option value="bi-patch-check-fill">Patch Check</option>
+                                        <option value="bi-cash-coin">Cash Coin</option>
+                                        <option value="bi-cursor-fill">Cursor</option>
+                                        <option value="bi-lightning-charge-fill">Lightning Charge</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Icon Color</label>
-                                    <input type="text" class="form-control" id="icon_color" name="icon_color" placeholder="text-navy" value="text-navy">
+                                    <select class="form-select" id="icon_color" name="icon_color">
+                                        <option value="text-navy">Navy</option>
+                                        <option value="text-primary">Blue (Primary)</option>
+                                        <option value="text-success">Green (Success)</option>
+                                        <option value="text-danger">Red (Danger)</option>
+                                        <option value="text-warning">Yellow (Warning)</option>
+                                        <option value="text-info">Cyan (Info)</option>
+                                        <option value="text-secondary">Gray (Secondary)</option>
+                                        <option value="text-dark">Dark (Black)</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="form-label">Number <span class="text-danger">*</span></label>
@@ -130,6 +157,9 @@
                 if ($(this).html() == 'Create') {
                     $.ajax({
                         url: url, method: "POST", contentType: false, processData: false, data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -140,6 +170,9 @@
                         error: function(xhr) {
                             if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } 
                             else { showError(xhr.responseJSON?.message ?? "Something went wrong!"); }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
@@ -148,6 +181,9 @@
                     form_data.append("codeid", $("#codeid").val());
                     $.ajax({
                         url: upurl, method: "POST", contentType: false, processData: false, data: form_data,
+                        beforeSend: function() {
+                            $("#fullPageLoader").css("display", "flex");
+                        },
                         success: function(d) {
                             showSuccess(d.message);
                             $("#addThisFormContainer").slideUp(300);
@@ -158,6 +194,9 @@
                         error: function(xhr) {
                             if (xhr.status === 422) { showError(Object.values(xhr.responseJSON.errors)[0][0]); } 
                             else { showError(xhr.responseJSON?.message ?? "Something went wrong!"); }
+                        },
+                        complete: function() {
+                            $("#fullPageLoader").hide();
                         }
                     });
                 }
