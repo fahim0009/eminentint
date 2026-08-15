@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\WorkforceStatementApiController;
 use App\Http\Controllers\Api\PartnerApiController;
 use App\Http\Controllers\Api\TestimonialApiController;
 use App\Http\Controllers\Api\EmployerDemandApiController;
+use App\Http\Controllers\Api\CandidateApplicationApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthContoller::class, 'login']);
@@ -49,6 +50,7 @@ Route::get('partners', [PartnerApiController::class, 'getPartners']);
 Route::get('testimonials', [TestimonialApiController::class, 'getTestimonials']);
 
 Route::post('employer-demand', [EmployerDemandApiController::class, 'store']);
+Route::post('candidate-apply', [CandidateApplicationApiController::class, 'store']);
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('user', [AuthContoller::class, 'user']);
