@@ -12,7 +12,11 @@ use App\Http\Controllers\Api\HeroApiController;
 use App\Http\Controllers\Api\IndustryApiController;
 use App\Http\Controllers\Api\ServiceApiController;
 use App\Http\Controllers\Api\ContactApiController;
-use App\Http\Controllers\Api\EmployerZoneApiController; // Add this
+use App\Http\Controllers\Api\EmployerZoneApiController;
+use App\Http\Controllers\Api\DualFeatureApiController;
+use App\Http\Controllers\Api\WorkforceStatementApiController;
+use App\Http\Controllers\Api\PartnerApiController;
+use App\Http\Controllers\Api\TestimonialApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('login', [AuthContoller::class, 'login']);
@@ -36,6 +40,12 @@ Route::post('contact-store', [ContactApiController::class, 'submitContactForm'])
 Route::get('employer-advantages', [EmployerZoneApiController::class, 'getAdvantages']);
 Route::get('recruitment-steps', [EmployerZoneApiController::class, 'getRecruitmentSteps']);
 Route::get('track-records', [EmployerZoneApiController::class, 'getTrackRecords']);
+
+// New Dynamic Sections APIs
+Route::get('dual-feature', [DualFeatureApiController::class, 'getDualFeature']);
+Route::get('workforce-statement', [WorkforceStatementApiController::class, 'getWorkforceStatement']);
+Route::get('partners', [PartnerApiController::class, 'getPartners']);
+Route::get('testimonials', [TestimonialApiController::class, 'getTestimonials']);
 
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('user', [AuthContoller::class, 'user']);

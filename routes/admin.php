@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\CompanyLicenseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\DualFeatureController;
 use App\Http\Controllers\Admin\EmployerAdvantageController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GalleryCategoryController;
@@ -16,12 +17,15 @@ use App\Http\Controllers\Admin\IndustryController;
 use App\Http\Controllers\Admin\JobListingController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\MilestoneController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\RecruitmentStepController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TrackRecordController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WorkforceStatementController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -219,6 +223,38 @@ Route::group(['prefix' =>'admin/', 'middleware' => ['auth', 'is_admin']], functi
     Route::post('/track-record-update', [TrackRecordController::class, 'update']);
     Route::delete('/track-record/{id}', [TrackRecordController::class, 'delete'])->name('trackrec.delete');
     Route::post('/track-record-status', [TrackRecordController::class, 'toggleStatus']);
+
+
+    Route::get('/dual-feature', [DualFeatureController::class, 'index'])->name('dualfeature.index');
+    Route::post('/dual-feature', [DualFeatureController::class, 'update'])->name('dualfeature.update');
+
+// Workforce Statement (Single Row)
+Route::get('/workforce-statement', [WorkforceStatementController::class, 'index'])->name('workforce.index');
+Route::post('/workforce-statement', [WorkforceStatementController::class, 'update'])->name('workforce.update');
+
+
+// Partners
+Route::get('/partner', [PartnerController::class, 'index'])->name('allpartner');
+Route::post('/partner', [PartnerController::class, 'store'])->name('partner.store');
+Route::get('/partner/{id}/edit', [PartnerController::class, 'edit']);
+Route::post('/partner-update', [PartnerController::class, 'update']);
+Route::delete('/partner/{id}', [PartnerController::class, 'delete'])->name('partner.delete');
+Route::post('/partner-status', [PartnerController::class, 'toggleStatus']);
+
+
+// Testimonials
+Route::get('/testimonial', [TestimonialController::class, 'index'])->name('alltestimonial');
+Route::post('/testimonial', [TestimonialController::class, 'store'])->name('testimonial.store');
+Route::get('/testimonial/{id}/edit', [TestimonialController::class, 'edit']);
+Route::post('/testimonial-update', [TestimonialController::class, 'update']);
+Route::delete('/testimonial/{id}', [TestimonialController::class, 'delete'])->name('testimonial.delete');
+Route::post('/testimonial-status', [TestimonialController::class, 'toggleStatus']);
+
+
+
+
+
+
 
 
 });
