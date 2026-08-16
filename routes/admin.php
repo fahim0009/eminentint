@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\CandidateApplicationController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CompanyDetailsController;
 use App\Http\Controllers\Admin\CompanyLicenseController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DualFeatureController;
 use App\Http\Controllers\Admin\EmployerAdvantageController;
+use App\Http\Controllers\Admin\EmployerDemandController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\GalleryCategoryController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -250,8 +252,16 @@ Route::post('/testimonial-update', [TestimonialController::class, 'update']);
 Route::delete('/testimonial/{id}', [TestimonialController::class, 'delete'])->name('testimonial.delete');
 Route::post('/testimonial-status', [TestimonialController::class, 'toggleStatus']);
 
+// Employer Demand Requests
+Route::get('/employer-demand', [EmployerDemandController::class, 'index'])->name('alldemands');
+Route::get('/employer-demand/{id}', [EmployerDemandController::class, 'show'])->name('demand.show');
+Route::delete('/employer-demand/{id}', [EmployerDemandController::class, 'delete'])->name('demand.delete');
 
 
+// Candidate Applications
+Route::get('/candidate-application', [CandidateApplicationController::class, 'index'])->name('allapplications');
+Route::get('/candidate-application/{id}', [CandidateApplicationController::class, 'show'])->name('application.show');
+Route::delete('/candidate-application/{id}', [CandidateApplicationController::class, 'delete'])->name('application.delete');
 
 
 

@@ -226,6 +226,18 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('alldemands') }}" class="nav-link {{ Route::is('alldemands') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Employer Demand</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('allapplications') }}" class="nav-link {{ Route::is('allapplications') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Candidate Application</span>
+                    </a>
+                </li>
 
 
                 @php
