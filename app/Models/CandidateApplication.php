@@ -7,7 +7,11 @@ use Illuminate\Support\Str;
 
 class CandidateApplication extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'full_name', 'passport_number', 'phone', 'target_position', 
+        'job_listing_id', 'destination_country', 'experience_level', 
+        'passport_file', 'cv_file', 'tracking_id'
+    ];
 
     protected static function boot()
     {

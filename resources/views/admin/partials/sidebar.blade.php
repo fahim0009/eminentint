@@ -196,6 +196,38 @@
                     </a>
                 </li>
 
+                
+                <li class="nav-item">
+                    <a href="{{ route('dualfeature.index') }}" class="nav-link {{ Route::is('dualfeature.index') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Dual feature</span>
+                    </a>
+                </li>
+
+                
+                <li class="nav-item">
+                    <a href="{{ route('workforce.index') }}" class="nav-link {{ Route::is('workforce.index') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Workforce</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('allpartner') }}" class="nav-link {{ Route::is('allpartner') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Partner</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('alltestimonial') }}" class="nav-link {{ Route::is('alltestimonial') ? 'active' : '' }}">
+                        <i class="ri-image-line"></i>
+                        <span>Testimonial</span>
+                    </a>
+                </li>
+
+
+
                 @php
                     $settingsRoute = Route::is(
                         'admin.companyDetails',
